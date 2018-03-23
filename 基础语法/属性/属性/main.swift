@@ -114,7 +114,7 @@ struct SomeStructure {
         return 1
     }
 }
-print(SomeStructure.sotredTypeProperty) // 类似于类方法，通过类名调用
+print(SomeStructure.sotredTypeProperty) // 类似于类的静态变量，通过类名调用
 
 enum SomeEnumeration {
     static var storedTypeProperty = "Some value."
@@ -132,6 +132,27 @@ class SomeClass {
     // 可被子类重写
     class var overrideableComputedTypeProprety: Int {
         return 107
+    }
+}
+
+
+struct AudioChannel {
+    static let thresholdLevel = 10 // 音量的最大值
+    static var maxInputLevelForAllChannels = 0 // 最大输入音量
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // 将当前音量控制在音量的最大值之内
+                currentLevel = AudioChannel.thresholdLevel
+            } else if currentLevel < 0 {
+                currentLevel = 0
+            }
+            
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // 存储当前音量作为新的最大输入音量
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
     }
 }
 
