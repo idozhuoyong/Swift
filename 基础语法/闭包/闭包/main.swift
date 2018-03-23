@@ -95,5 +95,16 @@ print(instance.x)
 completionHandlers.first?()
 print(instance.x)
 
-// 自动闭包
+// 自动闭包，可方便控制代码执行实际
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count) // 5
+
+// 定义一个闭包，类似于匿名函数，但先不执行
+let customerProvider = {customersInLine.remove(at: 0)}
+print(type(of: customerProvider)) // () -> String
+print(customersInLine.count) // 5
+
+print("执行闭包, \(customerProvider())") // 执行闭包, Chris
+print(customersInLine.count) // 4
+
 
