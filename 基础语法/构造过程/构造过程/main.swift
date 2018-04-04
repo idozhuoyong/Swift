@@ -89,3 +89,110 @@ let bicycle = Bicycle()
 print("Bicycle: \(bicycle.descrption)")
 
 
+class Food {
+    var name: String
+    // 指定构造器
+    init(name: String) {
+        self.name = name;
+    }
+    // 遍历构造器
+    convenience init() {
+        self.init(name: "[Unnamed]]")
+    }
+}
+
+class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
+var obj = RecipeIngredient()
+print(obj.quantity)
+
+class ShoppingListItem2: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? "yes purchased?" : "no purchased?"
+        return output
+    }
+}
+var obj2 = ShoppingListItem2()
+print(obj2.description)
+
+// 可失败构造器
+struct Animal {
+    let spacies: String
+    init?(spacies: String) {
+        if spacies.isEmpty {
+            return nil
+        }
+        self.spacies = spacies
+    }
+}
+
+let someCreature = Animal(spacies: "cat")
+
+//print(type(of: someCreature))
+if let cat = someCreature {
+    print(cat.spacies)
+} else {
+    print("Animal create failed")
+}
+
+
+class Product {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+class CartItem: Product {
+    let quantity: Int
+    init?(name: String, quantity: Int) {
+        if quantity < 1 {
+            return nil
+        }
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    
+    override init?(name: String) {
+        if name == "hello" {return nil }
+        self.quantity = 1
+        super.init(name: name)
+    }
+}
+
+
+// 必要构造器: 在类的构造器前添加 required 修饰符表明所有该类的子类都必须实现该构造器
+class SomeClass {
+    required init() {
+        //
+    }
+}
+
+class SomeSubclass: SomeClass {
+    required init() {
+        //
+    }
+}
+
+
+// 自执行闭包
+let someProperty = {return "hello world"}()
+print(someProperty)
+
+
+
+
